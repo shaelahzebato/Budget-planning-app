@@ -18,10 +18,6 @@ const BudgetContextProvider = props => {
             toast.error("Le montant dépasse le budget restant !");
             return;
         }
-        // else if(!expense.name & !expense.price) {
-        //     toast.error("Veuillez renseigner des informations correctes !");
-        //     return;
-        // }
         setExpenses([...expenses, expense]);
         toast.success("Dépense ajoutée avec succès !");
     };

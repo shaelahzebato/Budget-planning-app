@@ -2,6 +2,9 @@ import React, { useContext, useState } from "react";
 import { BudgetContext } from "../Context/BudgetContext";
 import { v4 as uuidv4 } from 'uuid';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function AddExpensesForm() {
 
     const {addExpense} = useContext(BudgetContext)
@@ -12,6 +15,13 @@ function AddExpensesForm() {
     const handleSubmit = (e) => {
 
         e.preventDefault();
+
+        // Vérifier si les champs sont vides
+        if (!name.trim() || !price) {
+            toast.error("Veuillez remplir tous les champs avant d'ajouter une dépense.");
+            return;
+        }
+
         if (name && price) {
             addExpense({ id: uuidv4(), name, price: parseFloat(price) });
             setName("");
