@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ExpenseItem from './ExpenseItem';
+import { BudgetContext } from '../Context/BudgetContext';
 
 function ExpensesList() {
-    const expenses = [
-        { id: 1, name: "Shopping", price: 70000 },
-        { id: 2, name: "Maison", price: 80000 },
-        { id: 3, name: "Factures", price: 10000 },
-    ];
+    const { expenses, deleteExpense } = useContext(BudgetContext);
+
+    const handleDelete = (id) => {
+        deleteExpense(id);
+    };
+
 
     return (
         <div className="mt-6">
@@ -20,6 +22,7 @@ function ExpensesList() {
                             id={item.id} 
                             name={item.name} 
                             price={item.price.toLocaleString()} 
+                            deleteFunc={() => handleDelete(item.id)}
                         />
                     ))}
                 </ul>

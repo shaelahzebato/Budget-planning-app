@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { BudgetContext } from "../Context/BudgetContext";
+import { v4 as uuidv4 } from 'uuid';
 
 function AddExpensesForm() {
+
+    const {addExpense} = useContext(BudgetContext)
+
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState(0);
+
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
+        if (name && price) {
+            addExpense({ id: uuidv4(), name, price: parseFloat(price) });
+            setName("");
+            setPrice("");
+        }
+    };
+
     return (
-        <form className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl mx-auto">
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl mx-auto">
             <div className="flex flex-col md:flex-row gap-6">
                 {/* Champ Nom */}
                 <div className="flex flex-col w-full">
@@ -13,6 +31,8 @@ function AddExpensesForm() {
                         name="name" 
                         id="name" 
                         placeholder="Ex: Courses, Loyer..."
+                        value={name}
+                        onChange={event => setName(event.target.value)}
                     />
                 </div>
 
@@ -25,6 +45,8 @@ function AddExpensesForm() {
                         name="price" 
                         id="price" 
                         placeholder="Ex: 50000"
+                        value={price}
+                        onChange={event => setPrice(event.target.value)}
                     />
                 </div>
             </div>
